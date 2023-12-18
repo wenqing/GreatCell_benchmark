@@ -52,10 +52,10 @@ def get_fracture_k_and_s_at_the_center(root_directory):
         matIDs = mesh.cell_data["MaterialIDs"]
         submesh = mesh.extract_cells(np.where(matIDs == target_mat_id)[0])
         center_p_id = submesh.find_closest_point((0.02, 0.0, 0.11))
-        k_f = mesh.point_data["fracture_permeability"][center_p_id]
+        k_f = submesh.point_data["fracture_permeability"][center_p_id]
         k_f_all.append(k_f)
         print(f'The fracture permeability in the center is {k_f}')
-        s_f = mesh.point_data["fracture_stress"][center_p_id]
+        s_f = submesh.point_data["fracture_stress"][center_p_id]
         print(f'The normal stress on the fracture is {s_f[2]}')
         k_sn_all.append(s_f[2])
 

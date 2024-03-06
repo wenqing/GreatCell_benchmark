@@ -1,0 +1,765 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<OpenGeoSysProject>
+    <meshes>
+      <mesh>mesh/2d_mesh.vtu</mesh>
+      <mesh>mesh/2D_STRIP1.vtu</mesh>
+      <mesh>mesh/2D_STRIP2.vtu</mesh>
+      <mesh>mesh/2D_STRIP3.vtu</mesh>
+      <mesh>mesh/2D_STRIP4.vtu</mesh>
+      <mesh>mesh/2D_STRIP5.vtu</mesh>
+      <mesh>mesh/2D_STRIP6.vtu</mesh>
+      <mesh>mesh/2D_STRIP7.vtu</mesh>
+      <mesh>mesh/2D_STRIP8.vtu</mesh>
+      <mesh>mesh/2D_STRIP9.vtu</mesh>
+      <mesh>mesh/2D_STRIP10.vtu</mesh>
+      <mesh>mesh/2D_STRIP11.vtu</mesh>
+      <mesh>mesh/2D_STRIP12.vtu</mesh>
+      <mesh>mesh/2D_STRIP13.vtu</mesh>
+      <mesh>mesh/2D_STRIP14.vtu</mesh>
+      <mesh>mesh/2D_STRIP15.vtu</mesh>
+      <mesh>mesh/2D_STRIP16.vtu</mesh>
+      <mesh>mesh/2D_BAG1.vtu</mesh>
+      <mesh>mesh/2D_BAG2.vtu</mesh>
+      <mesh>mesh/2D_BAG3.vtu</mesh>
+      <mesh>mesh/2D_BAG4.vtu</mesh>
+      <mesh>mesh/2D_BAG5.vtu</mesh>
+      <mesh>mesh/2D_BAG6.vtu</mesh>
+      <mesh>mesh/2D_BAG7.vtu</mesh>
+      <mesh>mesh/2D_BAG8.vtu</mesh>
+      <mesh>mesh/2D_BAG9.vtu</mesh>
+      <mesh>mesh/2D_BAG10.vtu</mesh>
+      <mesh>mesh/2D_BAG11.vtu</mesh>
+      <mesh>mesh/2D_BAG12.vtu</mesh>
+      <mesh>mesh/2D_BAG13.vtu</mesh>
+      <mesh>mesh/2D_BAG14.vtu</mesh>
+      <mesh>mesh/2D_BAG15.vtu</mesh>
+      <mesh>mesh/2D_BAG16.vtu</mesh>
+      <mesh>mesh/2D_p_left.vtu</mesh>
+      <mesh>mesh/2D_p_right.vtu</mesh>
+      <mesh>mesh/2D_p_top.vtu</mesh>
+      <mesh>mesh/2D_p_bottom.vtu</mesh>
+    </meshes>
+    <processes>
+        <process>
+            <name>SD</name>
+            <type>SMALL_DEFORMATION</type>
+            <integration_order>2</integration_order>
+            <constitutive_relation>
+                <type>LinearElasticIsotropic</type>
+                <youngs_modulus>E</youngs_modulus>
+                <poissons_ratio>nu</poissons_ratio>
+            </constitutive_relation>
+            <specific_body_force>0. 0.</specific_body_force>
+            <process_variables>
+                <process_variable>displacement</process_variable>
+            </process_variables>
+            <secondary_variables>
+                <secondary_variable internal_name="epsilon" output_name="epsilon"/>
+                <secondary_variable internal_name="sigma" output_name="sigma"/>
+            </secondary_variables>
+        </process>
+    </processes>
+    <media>
+        <medium>
+            <phases>
+                <phase>
+                    <type>Solid</type>
+                    <properties>
+                        <property>
+                            <name>density</name>
+                            <type>Parameter</type>
+                            <parameter_name>rho</parameter_name>
+                        </property>
+                    </properties>
+                </phase>
+            </phases>
+        </medium>
+    </media>
+    <time_loop>
+        <processes>
+            <process ref="SD">
+                <nonlinear_solver>basic_newton_u</nonlinear_solver>
+                <convergence_criterion>
+                    <type>DeltaX</type>
+                    <norm_type>NORM2</norm_type>
+                    <abstol>1e-14</abstol>
+                    <reltol>1.e-8</reltol>
+                </convergence_criterion>
+                <time_discretization>
+                    <type>BackwardEuler</type>
+                </time_discretization>
+                <time_stepping>
+                    <type>FixedTimeStepping</type>
+                    <t_initial>0</t_initial>
+                    <t_end>4</t_end>
+                    <timesteps>
+                        <pair>
+                            <repeat>1</repeat>
+                            <delta_t>1.0</delta_t>
+                        </pair>
+                    </timesteps>
+                </time_stepping>
+            </process>
+        </processes>
+        <output>
+            <type>VTK</type>
+            <prefix>GreatCell_2D</prefix>
+            <variables>
+                <variable>displacement</variable>
+                <variable>sigma</variable>
+                <variable>epsilon</variable>
+            </variables>
+            <output_iteration_results>false</output_iteration_results>
+            <timesteps>
+                <pair>
+                    <repeat>1</repeat>
+                    <each_steps>1</each_steps>
+                </pair>
+            </timesteps>
+        </output>
+    </time_loop>
+    <parameters>
+        <parameter>
+            <name>E</name>
+            <type>MeshElement</type>
+            <field_name>E</field_name>
+        </parameter>
+        <parameter>
+            <name>nu</name>
+            <type>MeshElement</type>
+            <field_name>nu</field_name>
+        </parameter>
+        <parameter>
+            <name>k</name>
+            <type>Constant</type>
+            <value>1e-10</value>
+        </parameter>
+        <parameter>
+            <name>gc</name>
+            <type>Constant</type>
+            <value>300</value>
+        </parameter>
+        <parameter>
+            <name>ls</name>
+            <type>Constant</type>
+            <value>0.006</value>
+        </parameter>
+        <parameter>
+            <name>H</name>
+            <type>Constant</type>
+            <value>0.0</value>
+        </parameter>
+        <parameter>
+            <name>cf</name>
+            <type>Constant</type>
+            <value>0.0</value>
+        </parameter>
+        <parameter>
+            <name>displacement0</name>
+            <type>Constant</type>
+            <values>0 0</values>
+        </parameter>
+        <parameter>
+            <name>phasefield_ic</name>
+            <type>MeshNode</type>
+            <field_name>pf-ic</field_name>
+        </parameter>
+        <parameter>
+            <name>phasefield_bc</name>
+            <type>Constant</type>
+            <value>1.</value>
+        </parameter>
+        <parameter>
+            <name>pressure_ic</name>
+            <type>MeshNode</type>
+            <field_name>p-ic</field_name>
+        </parameter>
+        <parameter>
+            <name>zero</name>
+            <type>Constant</type>
+            <value>0</value>
+        </parameter>
+        <parameter>
+            <name>w_ini</name>
+            <type>Constant</type>
+            <value>0</value>
+        </parameter>
+        <parameter>
+            <name>rho</name>
+            <type>Constant</type>
+            <value>2.7e3</value>
+        </parameter>
+        <parameter>
+            <name>loading</name>
+            <type>Constant</type>
+            <value>1</value>
+        </parameter>
+        <parameter>
+            <name>BAG_1_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>BAG_1_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>BAG_2_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>BAG_2_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>BAG_3_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>BAG_3_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>BAG_5_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>BAG_5_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>BAG_4_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>BAG_4_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>BAG_6_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>BAG_6_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>BAG_7_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>BAG_7_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>BAG_8_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>BAG_8_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>BAG_9_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>BAG_9_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>BAG_10_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>BAG_10_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>BAG_11_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>BAG_11_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>BAG_12_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>BAG_12_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>BAG_13_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>BAG_13_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>BAG_14_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>BAG_14_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>BAG_15_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>BAG_15_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>BAG_16_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>BAG_16_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>STRIP_1_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>STRIP_1_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>STRIP_2_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>STRIP_2_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>STRIP_3_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>STRIP_3_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>STRIP_5_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>STRIP_5_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>STRIP_4_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>STRIP_4_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>STRIP_6_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>STRIP_6_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>STRIP_7_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>STRIP_7_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>STRIP_8_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>STRIP_8_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>STRIP_9_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>STRIP_9_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>STRIP_10_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>STRIP_10_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>STRIP_11_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>STRIP_11_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>STRIP_12_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>STRIP_12_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>STRIP_13_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>STRIP_13_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>STRIP_14_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>STRIP_14_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>STRIP_15_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>STRIP_15_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+        <parameter>
+            <name>STRIP_16_SURFACE_CURVE</name>
+            <type>CurveScaled</type>
+            <curve>STRIP_16_SURFACE_CURVE</curve>
+            <parameter>loading</parameter>
+        </parameter>
+    </parameters>
+    <curves>
+        <curve>
+            <name>BAG_1_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -7710000.0 -7710000.0</values>
+        </curve>
+        <curve>
+            <name>BAG_2_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -7700000.0 -7700000.0</values>
+        </curve>
+        <curve>
+            <name>BAG_3_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -8300000.0 -8300000.0</values>
+        </curve>
+        <curve>
+            <name>BAG_4_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -7800000.0 -7800000.0</values>
+        </curve>
+        <curve>
+            <name>BAG_5_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -7740000.0 -7740000.0</values>
+        </curve>
+        <curve>
+            <name>BAG_6_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -7700000.0 -7700000.0</values>
+        </curve>
+        <curve>
+            <name>BAG_7_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -8300000.0 -8300000.0</values>
+        </curve>
+        <curve>
+            <name>BAG_8_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -7720000.0 -7720000.0</values>
+        </curve>
+        <curve>
+            <name>BAG_9_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -7710000.0 -7710000.0</values>
+        </curve>
+        <curve>
+            <name>BAG_10_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -7700000.0 -7700000.0</values>
+        </curve>
+        <curve>
+            <name>BAG_11_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -8300000.0 -8300000.0</values>
+        </curve>
+        <curve>
+            <name>BAG_12_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -7800000.0 -7800000.0</values>
+        </curve>
+        <curve>
+            <name>BAG_13_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -7740000.0 -7740000.0</values>
+        </curve>
+        <curve>
+            <name>BAG_14_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -7700000.0 -7700000.0</values>
+        </curve>
+        <curve>
+            <name>BAG_15_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -8300000.0 -8300000.0</values>
+        </curve>
+        <curve>
+            <name>BAG_16_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -7720000.0 -7720000.0</values>
+        </curve>
+        <curve>
+            <name>STRIP_1_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -7705000.0 -7705000.0</values>
+        </curve>
+        <curve>
+            <name>STRIP_2_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -8000000.0 -8000000.0</values>
+        </curve>
+        <curve>
+            <name>STRIP_3_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -8050000.0 -8050000.0</values>
+        </curve>
+        <curve>
+            <name>STRIP_4_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -7770000.0 -7770000.0</values>
+        </curve>
+        <curve>
+            <name>STRIP_5_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -7720000.0 -7720000.0</values>
+        </curve>
+        <curve>
+            <name>STRIP_6_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -8000000.0 -8000000.0</values>
+        </curve>
+        <curve>
+            <name>STRIP_7_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -8010000.0 -8010000.0</values>
+        </curve>
+        <curve>
+            <name>STRIP_8_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -7715000.0 -7715000.0</values>
+        </curve>
+        <curve>
+            <name>STRIP_9_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -7705000.0 -7705000.0</values>
+        </curve>
+        <curve>
+            <name>STRIP_10_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -8000000.0 -8000000.0</values>
+        </curve>
+        <curve>
+            <name>STRIP_11_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -8050000.0 -8050000.0</values>
+        </curve>
+        <curve>
+            <name>STRIP_12_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -7770000.0 -7770000.0</values>
+        </curve>
+        <curve>
+            <name>STRIP_13_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -7720000.0 -7720000.0</values>
+        </curve>
+        <curve>
+            <name>STRIP_14_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -8000000.0 -8000000.0</values>
+        </curve>
+        <curve>
+            <name>STRIP_15_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -8010000.0 -8010000.0</values>
+        </curve>
+        <curve>
+            <name>STRIP_16_SURFACE_CURVE</name>
+            <coords>0 1 2 3 4</coords>
+            <values>0.0 0.0 0.0 -7715000.0 -7715000.0</values>
+        </curve>
+    </curves>
+    <process_variables>
+        <process_variable>
+            <name>displacement</name>
+            <components>2</components>
+            <order>1</order>
+            <initial_condition>displacement0</initial_condition>
+            <boundary_conditions>
+                <boundary_condition>
+                    <mesh>2D_p_right</mesh>
+                    <type>Dirichlet</type>
+                    <component>1</component>
+                    <parameter>zero</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_p_bottom</mesh>
+                    <type>Dirichlet</type>
+                    <component>0</component>
+                    <parameter>zero</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_p_left</mesh>
+                    <type>Dirichlet</type>
+                    <component>1</component>
+                    <parameter>zero</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_p_top</mesh>
+                    <type>Dirichlet</type>
+                    <component>0</component>
+                    <parameter>zero</parameter>
+                </boundary_condition>
+                <!--Set loading conditions, here copy the yellow section from Excel file-->
+                <boundary_condition>
+                    <mesh>2D_BAG1</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>BAG_1_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_BAG2</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>BAG_2_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_BAG3</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>BAG_3_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_BAG4</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>BAG_4_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_BAG5</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>BAG_5_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_BAG6</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>BAG_6_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_BAG7</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>BAG_7_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_BAG8</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>BAG_8_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_BAG9</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>BAG_9_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_BAG10</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>BAG_10_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_BAG11</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>BAG_11_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_BAG12</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>BAG_12_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_BAG13</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>BAG_13_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_BAG14</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>BAG_14_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_BAG15</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>BAG_15_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_BAG16</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>BAG_16_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_STRIP1</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>STRIP_1_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_STRIP2</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>STRIP_2_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_STRIP3</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>STRIP_3_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_STRIP4</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>STRIP_4_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_STRIP5</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>STRIP_5_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_STRIP6</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>STRIP_6_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_STRIP7</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>STRIP_7_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_STRIP8</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>STRIP_8_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_STRIP9</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>STRIP_9_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_STRIP10</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>STRIP_10_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_STRIP11</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>STRIP_11_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_STRIP12</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>STRIP_12_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_STRIP13</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>STRIP_13_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_STRIP14</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>STRIP_14_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_STRIP15</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>STRIP_15_SURFACE_CURVE</parameter>
+                </boundary_condition>
+                <boundary_condition>
+                    <mesh>2D_STRIP16</mesh>
+                    <type>NormalTraction</type>
+                    <parameter>STRIP_16_SURFACE_CURVE</parameter>
+                </boundary_condition>
+            </boundary_conditions>
+        </process_variable>
+    </process_variables>
+    <nonlinear_solvers>
+        <nonlinear_solver>
+            <name>basic_newton_u</name>
+            <type>Newton</type>
+            <max_iter>659</max_iter>
+            <linear_solver>linear_solver_u</linear_solver>
+        </nonlinear_solver>
+    </nonlinear_solvers>
+    <linear_solvers>
+        <linear_solver>
+            <name>linear_solver_u</name>
+            <petsc>
+                <prefix>u</prefix>
+                <!-- <parameters>-u_ksp_type cg -u_pc_type bjacobi -u_ksp_atol 1e-8 -u_ksp_rtol 1e-8</parameters> -->
+                <parameters>-u_ksp_type cg -u_pc_type hypre -u_pc_hypre_type boomeramg -u_pc_hypre_boomeramg_strong_threshold 0.7 -u_ksp_atol 1e-12 -u_ksp_rtol 1e-12 </parameters>
+            </petsc>
+        </linear_solver>
+    </linear_solvers>
+</OpenGeoSysProject>

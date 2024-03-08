@@ -15,6 +15,8 @@ def create_xml_file(file_name):
         ("/*/parameters/parameter[name='E1']/value/text()", "26.85e9"),
         ("/*/parameters/parameter[name='nu1']/value/text()", "0.27"),
         ("/*/parameters/parameter[name='k']/value/text()", "2.58e-19"),
+        ("/*/parameters/parameter[name='Kn']/value/text()", "100.0e+9"),
+        ("/*/parameters/parameter[name='Ks']/value/text()", "100.0e+9"),
         ("/*/time_loop/output/prefix/text()", "GreatCell_3D_Greywacke")
     ]
 

@@ -2,7 +2,6 @@
 <OpenGeoSysProject>
     <meshes>
         <mesh>3D_embededFracture.vtu</mesh>
-        <mesh>G3_geometry_borehole.vtu</mesh>
         <mesh>G3_geometry_STRIP_1_SURFACE.vtu</mesh>
         <mesh>G3_geometry_STRIP_2_SURFACE.vtu</mesh>
         <mesh>G3_geometry_STRIP_3_SURFACE.vtu</mesh>

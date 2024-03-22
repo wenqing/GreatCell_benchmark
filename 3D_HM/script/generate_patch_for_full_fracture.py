@@ -11,6 +11,8 @@ def create_xml_file(file_name):
     # Add replace elements
     replace_elements = [
         ("/*/meshes/mesh[1]/text()", "3D_fullFracture.vtu"),
+        ("/*/time_loop/processes/process/convergence_criterion/abstols/text()",
+          "1.0e-10 1e-10 5e-10 1e-10 1e-10 1e-10 1e-10"),
         ("/*/time_loop/processes/process/time_stepping/initial_dt/text()", "1e-3"),
         ("/*/time_loop/processes/process/time_stepping/minimum_dt/text()", "1e-3"),
         ("/*/parameters/parameter[name='E1']/value/text()", "26.85e9"),
@@ -24,10 +26,19 @@ def create_xml_file(file_name):
     for msel, value in replace_elements:
         ET.SubElement(root, "replace", msel=msel).text = value
  
+    ## Remove tag abstol
+    #ET.SubElement(root, "remove",
+    #  sel="/*/time_loop/processes/process/convergence_criterion/abstols")
+
+    ## Add new tag reltol
+    #convergence_criterion = ET.SubElement(root, "add", sel="/*/time_loop/processes/process/convergence_criterion")
+    #reltol = ET.SubElement(convergence_criterion, "reltols")
+    #reltol.text = "1e-15 1e-14 1e-14 1e-14 1e-15 1e-14 1e-14"
+
     # Create an ElementTree and write to the specified file
     tree = ET.ElementTree(root)
     ET.indent(tree, '    ')
-    tree.write(file_name + '_full_frature_greywacke.xml', encoding="ISO-8859-1",
+    tree.write(file_name + '_full_frature_greywacke_low_kn.xml', encoding="ISO-8859-1",
                xml_declaration=True)#, pretty_print=True)
 
 if __name__ == "__main__":

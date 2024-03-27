@@ -96,8 +96,6 @@ Point(67) = {0, r0, 0, lc};
 Point(68) = {-r0, 0, 0, lc};
 Point(69) = {0, -r0, 0, lc};
 
-
-
 Point(70) = {r2, 0, 0, lc2};
 Point(70000) = {r3, 0, 0, lc1};
 Point(71) = {0., r2, 0, lc2};
@@ -108,6 +106,12 @@ Point(74) = {r1, 0, 0, lc1};
 Point(75) = {0, r1, 0, lc1};
 Point(76) = {-r1, 0, 0, lc1};
 Point(77) = {0, -r1, 0, lc1};
+
+
+Point(78) = {0.04, 0, 0.1, lc2};
+Point(79) = {0.04, 0, 0.198, lc2};
+Point(80) = {0.0, 0, 0.1, lc2};
+Point(81) = {0.0, 0, 0.198, lc2};
 
 Circle(1) = {66, 65, 67};
 Circle(2) = {66, 65, 69};
@@ -256,6 +260,12 @@ For i In {5:11}
       Surface{i}; 
     }
 EndFor
+
+Line(2000)={78,79};
+Line(2001)={80,81};
+
+Line{2000} In Surface{871};
+Line{2001} In Surface{871};
 
 Physical Surface(1) = {984, 916, 871, 904, 972};
 Physical Volume(2) = {2, 3, 4, 5, 6, 7};

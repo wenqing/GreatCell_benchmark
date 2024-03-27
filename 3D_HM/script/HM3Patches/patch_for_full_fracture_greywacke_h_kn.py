@@ -11,8 +11,8 @@ def create_xml_file(file_name):
           "PerComponentDeltaX"),
         ("/*/time_loop/processes/process/convergence_criterion/abstols/text()",
           "1.0e-10 1e-9 1e-9 1e-10 1e-10 1e-10 1e-10"),
-        ("/*/time_loop/processes/process/time_stepping/initial_dt/text()", "1e-4"),
-        ("/*/time_loop/processes/process/time_stepping/minimum_dt/text()", "1e-4"),
+        ("/*/time_loop/processes/process/time_stepping/initial_dt/text()", "1e-5"),
+        ("/*/time_loop/processes/process/time_stepping/minimum_dt/text()", "1e-5"),
         ("/*/time_loop/processes/process/time_stepping/multiplier/text()", "4.5 3.0 2 0.7 0.5"),
         ("/*/time_loop/output/prefix/text()", "GreatCell_3D_full_fracture_Resin"),
         ("/*/parameters/parameter[name='E1']/value/text()", "26.85e9"),
@@ -21,6 +21,7 @@ def create_xml_file(file_name):
         ("/*/parameters/parameter[name='Kn']/value/text()", "100.0e+9"),
         ("/*/parameters/parameter[name='Ks']/value/text()", "100.0e+9"),
         ("/*/parameters/parameter[name='aperture0']/value/text()", "1.0e-5"),
+        ("/*/parameters/parameter[name='p0']/value/text()", "1.0e+5"),
         ("/*/process_variables/process_variable[1]/boundary_conditions/boundary_condition[1]/mesh/text()",
            "G3_geometry_pumping_bore_hole"),
         ("/*/process_variables/process_variable[1]/boundary_conditions/boundary_condition[2]/mesh/text()",
@@ -44,8 +45,8 @@ def create_xml_file(file_name):
     ## Add new tag reltol
     convergence_criterion = ET.SubElement(root, "add", sel="/*/time_loop/processes/process/convergence_criterion")
     reltol = ET.SubElement(convergence_criterion, "reltols")
-    reltol.text = "1e-7 1e-9 1e-9 1e-9 1e-9 1e-9 1e-9"
-    #reltol.text = "5e-6 8e-5 8e-5 5e-5 5e-4 5e-4 5e-3"
+    #reltol.text = "1e-10 5e-10 5e-10 5e-10 1e-10 5e-10 2e-10"
+    reltol.text = "1e-6 5e-5 7e-5 5e-5 1e-3 5e-5 3e-3"
 
     # Create an ElementTree and write to the specified file
     tree = ET.ElementTree(root)

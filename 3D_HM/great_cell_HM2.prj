@@ -262,7 +262,7 @@
         <parameter>
             <name>p0</name>
             <type>Constant</type>
-            <values>2.0e6</values>
+            <value>2.0e6</value>
         </parameter>        
         <parameter>
             <name>u0</name>
@@ -278,7 +278,7 @@
         <parameter>
             <name>p_down_stream</name>
             <type>Constant</type>
-            <values>3.45e6</values>
+            <value>3.45e6</value>
         </parameter>
         <parameter>
             <name>p_injection_rate</name>

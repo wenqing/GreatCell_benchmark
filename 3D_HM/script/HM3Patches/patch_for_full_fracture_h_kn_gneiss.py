@@ -14,7 +14,7 @@ def create_xml_file(file_name):
         ("/*/time_loop/processes/process/time_stepping/initial_dt/text()", "1e-5"),
         ("/*/time_loop/processes/process/time_stepping/minimum_dt/text()", "1e-5"),
         ("/*/time_loop/processes/process/time_stepping/multiplier/text()", "4.5 3.0 2 0.7 0.5"),
-        ("/*/time_loop/output/prefix/text()", "GreatCell_3D_full_fracture_Resin"),
+        ("/*/time_loop/output/prefix/text()", "GreatCell_3D_full_fracture_Gneiss"),
         ("/*/parameters/parameter[name='E1']/value/text()", "57.1e9"),
         ("/*/parameters/parameter[name='nu1']/value/text()", "0.19"),
         ("/*/parameters/parameter[name='k']/value/text()", "1.0e-19"),

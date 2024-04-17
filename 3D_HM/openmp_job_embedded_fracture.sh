@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=HM_greywacke
+#SBATCH --job-name=HM2
 ###SBATCH --chdir=/home/wwang/data_D/project/DECOVALEX2023/TaskG/GreatCellBenchmark/input/3D_HM
 #SBATCH --output=/home/wwang/data_D/project/DECOVALEX2023/TaskG/GreatCellBenchmark/output/3D_HM/logs/log_%x_%j.txt
 #SBATCH --error=/home/wwang/data_D/project/DECOVALEX2023/TaskG/GreatCellBenchmark/output/3D_HM/logs/err_%x_%j.txt
